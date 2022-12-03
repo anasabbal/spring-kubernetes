@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: spring-kubernetes
+  cloud:
+    kubernetes:
+      # kubernetes config maps
+      config:
+        enabled: true
+        enable-api: true
+        namespace: default
+        sources:
+          - name: ${spring.application.name}
+      # automatic reloading of config props
+      reload:
+        enabled: false
+        mode: polling
+        period: 5000
+        strategy: refresh
+      # kubernetes secrets
+      secrets:
+        enabled: true
+        enable-api: false
+        namespace: default
+        name: ${spring.application.name}
+        paths:
+          - /etc/secrets/spring-kubernetes
+logging:
+  level:
+    org:
+      springframework:
+        cloud:
+          kubernetes: debug
